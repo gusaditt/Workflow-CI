@@ -19,6 +19,11 @@ jobs:
           auto-activate-base: false
           python-version: "3.12"
 
+      - name: Init conda
+        run: |
+          conda init bash
+          source ~/.bashrc
+
       - name: Install MLflow
         run: pip install mlflow==2.19.0
 
