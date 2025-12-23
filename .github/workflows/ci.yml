@@ -13,19 +13,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          auto-activate-base: false
           python-version: "3.12"
 
-      - name: Init conda
+      - name: Install dependencies
         run: |
-          conda init bash
-          source ~/.bashrc
+          pip install mlflow==2.19.0
+          pip install scikit-learn pandas numpy matplotlib seaborn
 
-      - name: Install MLflow
-        run: pip install mlflow==2.19.0
-
-      - name: Run MLflow Project
-        run: mlflow run MLProject
+      - name: Run MLflow Project (NO conda)
+        run: |
+          mlflow run MLProject --env-manager=local
