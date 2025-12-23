@@ -1,0 +1,26 @@
+name: MLflow CI
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  run-mlflow-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-activate-base: false
+          python-version: "3.12"
+
+      - name: Install MLflow
+        run: pip install mlflow==2.19.0
+
+      - name: Run MLflow Project
+        run: mlflow run MLProject
