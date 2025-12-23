@@ -26,9 +26,16 @@ jobs:
       - name: Run MLflow Project (NO conda)
         run: |
           mlflow run MLProject --env-manager=local
-          
+
       - name: Upload MLflow artifacts
         uses: actions/upload-artifact@v4
         with:
           name: mlflow-artifacts
           path: mlruns
+
+      - name: Build Docker Image (MLflow)
+        run: |
+          RUN_ID=$(ls mlruns/0 | head -n 1)
+          mlflow models build-docker \
+            -m mlruns/0/$RUN_ID/artifacts/model \
+            -n rf-diabetes-ci
