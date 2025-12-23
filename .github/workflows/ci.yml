@@ -26,3 +26,9 @@ jobs:
       - name: Run MLflow Project (NO conda)
         run: |
           mlflow run MLProject --env-manager=local
+          
+      - name: Upload MLflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlflow-artifacts
+          path: mlruns
